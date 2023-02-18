@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.4),
-    on February 12, 2023, at 15:14
+    on February 18, 2023, at 17:57
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -80,10 +80,20 @@ def randomize_location(loc, val_x, val_y):
 num_of_training = 4
 
 # Define the number of the experiment trials
-num_of_trials = 24
+num_of_trials = 4
 # Run 'Before Experiment' code from shape
 shapeOrientation = 0
 shapeName = ''
+# Run 'Before Experiment' code from reset_success_2
+answers = []
+# Run 'Before Experiment' code from update_answer
+def answerType(text, bool):
+    if bool:
+        text.text = 'V'
+        text.color = 'green'
+    else:
+        text.text = 'X'
+        text.color = 'red'
 # Run 'Before Experiment' code from code_answer
 answerVariant = ''
 pressedKey = ''
@@ -104,8 +114,9 @@ expInfo = {
     'gender': ["man", "woman", "other"],
     'age': '',
     'handedness': ["right-handed", "left-handed"],
-    'number of years in education': '',
+    'education (years)': '',
     'shape': ["square", "diamond"],
+    'controls': ["regular", "reversed"],
 }
 # --- Show participant info dialog --
 dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
@@ -135,7 +146,7 @@ frameTolerance = 0.001  # how close to onset before 'same' frame
 
 # --- Setup the Window ---
 win = visual.Window(
-    size=[1280, 720], fullscr=True, screen=0, 
+    size=[1920, 1080], fullscr=True, screen=0, 
     winType='pyglet', allowStencil=False,
     monitor='testMonitor', color=[0.5059, 0.5059, 0.5059], colorSpace='rgb',
     blendMode='avg', useFBO=True, 
@@ -170,6 +181,23 @@ if expInfo["shape"] == 'square':
 else:
     shapeOrientation = 45
     shapeName = 'Diamond'
+# Run 'Begin Experiment' code from controls
+identical_key = 0
+non_identical_key = 0
+
+if expInfo['controls'] == 'regular':
+    identical_key = 112
+    non_identical_key = 113
+    print('Regular Controls')
+    print('P = Identical | Q = Non-Identical')
+    
+elif expInfo['controls'] == 'reversed':
+    identical_key = 113
+    non_identical_key = 112
+    print('Reversed Controls')
+    print('Q = Identical | P = Non-Identical')
+    
+
 
 # --- Initialize components for Routine "instructions_start_1" ---
 inst1_square = visual.TextStim(win=win, name='inst1_square',
@@ -265,6 +293,15 @@ square_2 = visual.Rect(
     opacity=None, depth=-5.0, interpolate=True)
 # Run 'Begin Experiment' code from key_press
 thisKey = ''
+
+# --- Initialize components for Routine "answer_feedback" ---
+feedback_text = visual.TextStim(win=win, name='feedback_text',
+    text=None,
+    font='Open Sans',
+    pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
+    color='white', colorSpace='rgb', opacity=None, 
+    languageStyle='LTR',
+    depth=-1.0);
 
 # --- Initialize components for Routine "calculate_success" ---
 calculate_text = visual.TextStim(win=win, name='calculate_text',
@@ -529,6 +566,7 @@ random.shuffle(trial_order)
 random.shuffle(training_order)
 # Run 'Begin Routine' code from training
 # Order:           1          0          1          0             0           0              1          1
+shape_answers = [  1,         0,         1,         0,            0,          0,             1,         1]
 shape1_shape = ['square', 'square'  , 'circle', 'triangle'   ,'triangle' ,'square'      ,'square' , 'triangle']
 shape2_shape = ['square', 'triangle', 'circle', 'circle'     , 'circle'  , 'triangle'   , 'square', 'triangle']
 shape1_color = ['red'   , 'red'     , 'blue'  , 'saddlebrown', 'cyan'    , 'purple'     , 'orange', 'yellow']
@@ -1120,7 +1158,15 @@ for thisRepeat_training in repeat_training:
                     current_key = ord(thisKey[0])
                     
                     # Skip to next routine
-                    if current_key == 112 or current_key == 113:  
+                    if current_key == identical_key or current_key == non_identical_key:
+                        # P - 112 | Identical
+                        if current_key == identical_key:
+                            answers.append(identical_key)
+                 
+                        # Q - 113 | Non-Identical
+                        if current_key == non_identical_key:
+                            answers.append(non_identical_key)
+                            
                         continueRoutine = False
             
             # check for quit (typically the Esc key)
@@ -1145,16 +1191,96 @@ for thisRepeat_training in repeat_training:
         for thisComponent in stepsComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
-        # Run 'End Routine' code from key_press
-        # P - 112 | Identical
-        if current_key == 112:
-            answers.append(112)
-             
-        # Q - 113 | Non-Identical
-        if current_key == 113:
-            answers.append(113)
         # the Routine "steps" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
+        
+        # --- Prepare to start Routine "answer_feedback" ---
+        continueRoutine = True
+        routineForceEnded = False
+        # update component parameters for each repeat
+        # Run 'Begin Routine' code from update_answer
+        if shape1_shape[training_loop.thisN] == shape2_shape[training_loop.thisN] and shape1_color[training_loop.thisN] == shape1_color[training_loop.thisN]:
+            if answers[training_loop.thisN] == identical_key:
+                answerType(feedback_text, True)
+            else:
+                answerType(feedback_text, False)
+            
+        else:
+            if answers[training_loop.thisN] == non_identical_key:
+                answerType(feedback_text, True)
+            else:
+                answerType(feedback_text, False)
+        
+        # keep track of which components have finished
+        answer_feedbackComponents = [feedback_text]
+        for thisComponent in answer_feedbackComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "answer_feedback" ---
+        while continueRoutine and routineTimer.getTime() < 0.5:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *feedback_text* updates
+            if feedback_text.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+                # keep track of start time/frame for later
+                feedback_text.frameNStart = frameN  # exact frame index
+                feedback_text.tStart = t  # local t and not account for scr refresh
+                feedback_text.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(feedback_text, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'feedback_text.started')
+                feedback_text.setAutoDraw(True)
+            if feedback_text.status == STARTED:
+                # is it time to stop? (based on global clock, using actual start)
+                if tThisFlipGlobal > feedback_text.tStartRefresh + 0.5-frameTolerance:
+                    # keep track of stop time/frame for later
+                    feedback_text.tStop = t  # not accounting for scr refresh
+                    feedback_text.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'feedback_text.stopped')
+                    feedback_text.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+                core.quit()
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in answer_feedbackComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "answer_feedback" ---
+        for thisComponent in answer_feedbackComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+        if routineForceEnded:
+            routineTimer.reset()
+        else:
+            routineTimer.addTime(-0.500000)
     # completed 8.0 repeats of 'training_loop'
     
     
@@ -1166,16 +1292,16 @@ for thisRepeat_training in repeat_training:
     for trial in range(8):
         
         # Identical
-        if shape1_shape[trial] == shape2_shape[trial] and shape1_color[trial] == shape1_color[trial]:
+        if shape_answers[trial] == 1:
             # Correct Answer
-            if answers[trial] == 112:
+            if answers[trial] == identical_key:
                 trainingCorrectAnswers += 1
         
         
         # Non-identical
         else:
             # Correct Answer
-            if answers[trial] == 113:
+            if answers[trial] == non_identical_key:
                 trainingCorrectAnswers += 1
                 
     
@@ -1927,7 +2053,7 @@ for thisShow_images_t in show_images_t:
                 for thisKey in keys:
                     current_key = ord(thisKey[0])
                     
-                    if current_key == 112 or current_key == 113:
+                    if current_key == identical_key or current_key == non_identical_key:
                         redisplay_image_loop_t.finished = True
                         continueRoutine = False   
             
@@ -2657,7 +2783,7 @@ for thisShow_image in show_images:
                 for thisKey in keys:
                     current_key = ord(thisKey[0])
                     
-                    if current_key == 112 or current_key == 113:
+                    if current_key == identical_key or current_key == non_identical_key:
                         redisplay_image_loop.finished = True
                         continueRoutine = False   
             
@@ -2705,9 +2831,11 @@ for thisShow_image in show_images:
             redisplay_image_loop.addData('imagesVariationSign', '==')
         
         
-        # Key 112 = p
-        if current_key == 112:
-            pressedKey = 'p'
+        # Key 112
+        if current_key == identical_key:
+            
+            pressedKey = 'p' if identical_key == 112 else 'q'
+            
             if trial_order[show_images.thisN] == 1:
                 redisplay_image_loop.addData('correctAnswerBoolean', True)
                 redisplay_image_loop.addData('correctAnswer', 1)
@@ -2723,9 +2851,11 @@ for thisShow_image in show_images:
             redisplay_image_loop.addData('img2Colors', img2_colors)
             
          
-        # Key 113 = q
-        elif current_key == 113:
-            pressedKey = 'q'
+        # Key 113
+        elif current_key == non_identical_key:
+            
+            pressedKey = 'q' if non_identical_key == 113 else 'p'
+            
             if trial_order[show_images.thisN] == 0:
                 redisplay_image_loop.addData('correctAnswerBoolean', True)
                 redisplay_image_loop.addData('correctAnswer', 1)
