@@ -121,7 +121,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="shape1_shape = [&quot;circle&quot;, &quot;square&quot;, &quot;triangle&quot;, &quot;triangle&quot;, &quot;circle&quot;, &quot;square&quot;, &quot;triangle&quot;, &quot;triangle&quot;];&amp;#10;shape2_shape = [&quot;square&quot;, &quot;triangle&quot;, &quot;circle&quot;, &quot;circle&quot;, &quot;circle&quot;, &quot;triangle&quot;, &quot;square&quot;, &quot;triangle&quot;];&amp;#10;shape1_color = [&quot;green&quot;, &quot;red&quot;, &quot;blue&quot;, &quot;saddlebrown&quot;, &quot;cyan&quot;, &quot;purple&quot;, &quot;orange&quot;, &quot;yellow&quot;];&amp;#10;shape2_color = [&quot;red&quot;, &quot;purple&quot;, &quot;blue&quot;, &quot;green&quot;, &quot;cyan&quot;, &quot;saddlebrown&quot;, &quot;orange&quot;, &quot;yellow&quot;];&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="# Order:           1          0          1          0             0           0              1          1&amp;#10;shape1_shape = ['square', 'square'  , 'circle', 'triangle'   ,'triangle' ,'square'      ,'square' , 'triangle']&amp;#10;shape2_shape = ['square', 'triangle', 'circle', 'circle'     , 'circle'  , 'triangle'   , 'square', 'triangle']&amp;#10;shape1_color = ['red'   , 'red'     , 'blue'  , 'saddlebrown', 'cyan'    , 'purple'     , 'orange', 'yellow']&amp;#10;shape2_color = ['red'   , 'purple'  , 'blue'  , 'green'      , 'cyan'    , 'saddlebrown', 'orange', 'yellow']&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="# Order:           1          0          1          0             0           0              1          1&amp;#10;shape_answers = [  1,         0,         1,         0,            0,          0,             1,         1]&amp;#10;shape1_shape = ['square', 'square'  , 'circle', 'triangle'   ,'triangle' ,'square'      ,'square' , 'triangle']&amp;#10;shape2_shape = ['square', 'triangle', 'circle', 'circle'     , 'circle'  , 'triangle'   , 'square', 'triangle']&amp;#10;shape1_color = ['red'   , 'red'     , 'blue'  , 'saddlebrown', 'cyan'    , 'purple'     , 'orange', 'yellow']&amp;#10;shape2_color = ['red'   , 'purple'  , 'blue'  , 'green'      , 'cyan'    , 'saddlebrown', 'orange', 'yellow']&amp;#10;&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
@@ -1360,12 +1360,12 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
-        <Param val="keys = event.getKeys()&amp;#10;&amp;#10;if len(keys)&gt;0:&amp;#10;    for thisKey in keys:&amp;#10;        current_key = ord(thisKey[0])&amp;#10;        &amp;#10;        # Skip to next routine&amp;#10;        if current_key == 112 or current_key == 113:  &amp;#10;            continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="keys = event.getKeys()&amp;#10;&amp;#10;if len(keys)&gt;0:&amp;#10;    for thisKey in keys:&amp;#10;        current_key = ord(thisKey[0])&amp;#10;        &amp;#10;        # Skip to next routine&amp;#10;        if current_key == 112 or current_key == 113:&amp;#10;            # P - 112 | Identical&amp;#10;            if current_key == 112:&amp;#10;                answers.append(112)&amp;#10;     &amp;#10;            # Q - 113 | Non-Identical&amp;#10;            if current_key == 113:&amp;#10;                answers.append(113)&amp;#10;                &amp;#10;            continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="/* Syntax Error: Fix Python code */" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="# P - 112 | Identical&amp;#10;if current_key == 112:&amp;#10;    answers.append(112)&amp;#10;     &amp;#10;# Q - 113 | Non-Identical&amp;#10;if current_key == 113:&amp;#10;    answers.append(113)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="key_press" valType="code" updates="None" name="name"/>
       </CodeComponent>
@@ -1419,7 +1419,7 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="/* Syntax Error: Fix Python code */" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="for trial in range(8):&amp;#10;    &amp;#10;    # Identical&amp;#10;    if shape1_shape[trial] == shape2_shape[trial] and shape1_color[trial] == shape1_color[trial]:&amp;#10;        # Correct Answer&amp;#10;        if answers[trial] == 112:&amp;#10;            trainingCorrectAnswers += 1&amp;#10;    &amp;#10;    &amp;#10;    # Non-identical&amp;#10;    else:&amp;#10;        # Correct Answer&amp;#10;        if answers[trial] == 113:&amp;#10;            trainingCorrectAnswers += 1&amp;#10;            &amp;#10;&amp;#10;successRate = trainingCorrectAnswers / 8 * 100&amp;#10;calculate_text.text = str(successRate) + '\n' + 'אנא פנה\י לנסיינית.'&amp;#10;&amp;#10;# If the participant successfully answered at least 75% of the answers&amp;#10;if successRate &gt;= 75:&amp;#10;    repeat_training.finished = True&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="for trial in range(8):&amp;#10;    &amp;#10;    # Identical&amp;#10;    if shape_answers[trial] == 1:&amp;#10;        # Correct Answer&amp;#10;        if answers[trial] == 112:&amp;#10;            trainingCorrectAnswers += 1&amp;#10;    &amp;#10;    &amp;#10;    # Non-identical&amp;#10;    else:&amp;#10;        # Correct Answer&amp;#10;        if answers[trial] == 113:&amp;#10;            trainingCorrectAnswers += 1&amp;#10;            &amp;#10;&amp;#10;successRate = trainingCorrectAnswers / 8 * 100&amp;#10;calculate_text.text = str(successRate) + '\n' + 'אנא פנה\י לנסיינית.'&amp;#10;&amp;#10;# If the participant successfully answered at least 75% of the answers&amp;#10;if successRate &gt;= 75:&amp;#10;    repeat_training.finished = True&amp;#10;    continueRoutine = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="keys = event.getKeys()&amp;#10;&amp;#10;if len(keys)&gt;0:&amp;#10;    for thisKey in keys:&amp;#10;        current_key = ord(thisKey[0])&amp;#10;        &amp;#10;        # Repeat the initial training - 'r'&amp;#10;        if current_key == 114:  &amp;#10;            continueRoutine = False" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
@@ -1433,8 +1433,8 @@
     </Routine>
     <Routine name="reset_success">
       <CodeComponent name="reset_success_2">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="answers = []" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="answers = [];&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="answers = [];&amp;#10;trainingCorrectAnswers = 0;&amp;#10;successRate = 0;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
@@ -1680,6 +1680,50 @@
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
     </Routine>
+    <Routine name="answer_feedback">
+      <CodeComponent name="update_answer">
+        <Param val="def answerType(text, bool):&amp;#10;    if bool:&amp;#10;        text.text = 'V'&amp;#10;        text.color = 'green'&amp;#10;    else:&amp;#10;        text.text = 'X'&amp;#10;        text.color = 'red'" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="function answerType(text, bool) {&amp;#10;    if (bool) {&amp;#10;        text.text = &quot;V&quot;;&amp;#10;        text.color = &quot;green&quot;;&amp;#10;    } else {&amp;#10;        text.text = &quot;X&quot;;&amp;#10;        text.color = &quot;red&quot;;&amp;#10;    }&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="if (((shape1_shape[training_loop.thisN] === shape2_shape[training_loop.thisN]) &amp;&amp; (shape1_color[training_loop.thisN] === shape1_color[training_loop.thisN]))) {&amp;#10;    if ((answers[training_loop.thisN] === 112)) {&amp;#10;        answerType(feedback_text, true);&amp;#10;    } else {&amp;#10;        answerType(feedback_text, false);&amp;#10;    }&amp;#10;} else {&amp;#10;    if ((answers[training_loop.thisN] === 113)) {&amp;#10;        answerType(feedback_text, true);&amp;#10;    } else {&amp;#10;        answerType(feedback_text, false);&amp;#10;    }&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="if shape1_shape[training_loop.thisN] == shape2_shape[training_loop.thisN] and shape1_color[training_loop.thisN] == shape1_color[training_loop.thisN]:&amp;#10;    if answers[training_loop.thisN] == 112:&amp;#10;        answerType(feedback_text, True)&amp;#10;    else:&amp;#10;        answerType(feedback_text, False)&amp;#10;    &amp;#10;else:&amp;#10;    if answers[training_loop.thisN] == 113:&amp;#10;        answerType(feedback_text, True)&amp;#10;    else:&amp;#10;        answerType(feedback_text, False)&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="update_answer" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <TextComponent name="feedback_text">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.1" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="feedback_text" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="3" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="create_data"/>
@@ -1711,6 +1755,7 @@
     </LoopInitiator>
     <Routine name="fixation"/>
     <Routine name="steps"/>
+    <Routine name="answer_feedback"/>
     <LoopTerminator name="training_loop"/>
     <Routine name="calculate_success"/>
     <LoopTerminator name="repeat_training"/>
