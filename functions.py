@@ -61,29 +61,8 @@ def randomize_location(loc, val_x, val_y):
 num_of_training = 4
 
 # Define the number of the experiment trials
-num_of_trials = 24
+num_of_trials = 4
 
-# Create trials
-trial_order = []
-training_order = []
-
-# Regular trials
-for trial in range(num_of_trials):
-    if trial >= num_of_trials / 2:
-        trial_order.append(1)
-    else:
-        trial_order.append(0)
-
-# Training trials
-for trial in range(num_of_training):
-    if trial >= num_of_training / 2:
-        training_order.append(1)
-    else:
-        training_order.append(0)
-
-# Shuffle the trials order
-random.shuffle(trial_order)
-random.shuffle(training_order)
 
 shapeOrientation = 0
 shapeName = ""
@@ -97,6 +76,7 @@ else:
 
 
 # Order:           1          0          1          0             0           0              1          1
+shape_answers = [1, 0, 1, 0, 0, 0, 1, 1]
 shape1_shape = [
     "square",
     "square",
@@ -139,6 +119,24 @@ shape2_color = [
 ]
 
 
+identical_key = 0
+non_identical_key = 0
+
+if expInfo["controls"] == "regular":
+    identical_key = 112
+    non_identical_key = 113
+    print("Regular Controls")
+    print("P = Identical | Q = Non-Identical")
+
+elif expInfo["controls"] == "reversed":
+    identical_key = 113
+    non_identical_key = 112
+    print("Reversed Controls")
+    print("Q = Identical | P = Non-Identical")
+
+
+answers = []
+
 answers = []
 trainingCorrectAnswers = 0
 successRate = 0
@@ -152,17 +150,16 @@ if len(keys) > 0:
         current_key = ord(thisKey[0])
 
         # Skip to next routine
-        if current_key == 112 or current_key == 113:
+        if current_key == identical_key or current_key == non_identical_key:
+            # P - 112 | Identical
+            if current_key == identical_key:
+                answers.append(identical_key)
+
+            # Q - 113 | Non-Identical
+            if current_key == non_identical_key:
+                answers.append(non_identical_key)
+
             continueRoutine = False
-
-
-# P - 112 | Identical
-if current_key == 112:
-    answers.append(112)
-
-# Q - 113 | Non-Identical
-if current_key == 113:
-    answers.append(113)
 
 
 currentStep = training_loop.thisN
@@ -174,21 +171,43 @@ currentShape1 = shape1_shape[currentStep]
 currentShape2 = shape2_shape[currentStep]
 
 
+def answerType(text, bool):
+    if bool:
+        text.text = "V"
+        text.color = "green"
+    else:
+        text.text = "X"
+        text.color = "red"
+
+
+if (
+    shape1_shape[training_loop.thisN] == shape2_shape[training_loop.thisN]
+    and shape1_color[training_loop.thisN] == shape1_color[training_loop.thisN]
+):
+    if answers[training_loop.thisN] == identical_key:
+        answerType(feedback_text, True)
+    else:
+        answerType(feedback_text, False)
+
+else:
+    if answers[training_loop.thisN] == non_identical_key:
+        answerType(feedback_text, True)
+    else:
+        answerType(feedback_text, False)
+
+
 for trial in range(8):
 
     # Identical
-    if (
-        shape1_shape[trial] == shape2_shape[trial]
-        and shape1_color[trial] == shape1_color[trial]
-    ):
+    if shape_answers[trial] == 1:
         # Correct Answer
-        if answers[trial] == 112:
+        if answers[trial] == identical_key:
             trainingCorrectAnswers += 1
 
     # Non-identical
     else:
         # Correct Answer
-        if answers[trial] == 113:
+        if answers[trial] == non_identical_key:
             trainingCorrectAnswers += 1
 
 
@@ -269,6 +288,12 @@ for idx, block in enumerate(
             block.color = current_color
 
 
+if currentLoop.thisN == 0:
+    continueRoutine = False
+else:
+    continueRoutine = True
+
+
 current_key = 0
 
 keys = event.getKeys()
@@ -277,7 +302,7 @@ if len(keys) > 0:
     for thisKey in keys:
         current_key = ord(thisKey[0])
 
-        if current_key == 112 or current_key == 113:
+        if current_key == identical_key or current_key == non_identical_key:
             redisplay_image_loop_t.finished = True
             continueRoutine = False
 
@@ -337,6 +362,12 @@ else:
     img2_colors.append(random_colors[4])
 
 
+if currentLoop.thisN == 0:
+    continueRoutine = False
+else:
+    continueRoutine = True
+
+
 # Records the `fullRoutineRT` start
 
 if redisplay_image_loop.thisN == 0:
@@ -361,7 +392,7 @@ if len(keys) > 0:
     for thisKey in keys:
         current_key = ord(thisKey[0])
 
-        if current_key == 112 or current_key == 113:
+        if current_key == identical_key or current_key == non_identical_key:
             redisplay_image_loop.finished = True
             continueRoutine = False
 
@@ -385,9 +416,11 @@ elif trial_order[show_images.thisN] == 1:
     redisplay_image_loop.addData("imagesVariationSign", "==")
 
 
-# Key 112 = p
-if current_key == 112:
-    pressedKey = "p"
+# Key 112
+if current_key == identical_key:
+
+    pressedKey = "p" if identical_key == 112 else "q"
+
     if trial_order[show_images.thisN] == 1:
         redisplay_image_loop.addData("correctAnswerBoolean", True)
         redisplay_image_loop.addData("correctAnswer", 1)
@@ -403,9 +436,11 @@ if current_key == 112:
     redisplay_image_loop.addData("img2Colors", img2_colors)
 
 
-# Key 113 = q
-elif current_key == 113:
-    pressedKey = "q"
+# Key 113
+elif current_key == non_identical_key:
+
+    pressedKey = "q" if non_identical_key == 113 else "p"
+
     if trial_order[show_images.thisN] == 0:
         redisplay_image_loop.addData("correctAnswerBoolean", True)
         redisplay_image_loop.addData("correctAnswer", 1)
