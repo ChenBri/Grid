@@ -7,7 +7,7 @@
     <Param val="auto" valType="str" updates="None" name="Data file delimiter"/>
     <Param val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code" updates="None" name="Data filename"/>
     <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
-    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '001', 'gender': '&quot;man&quot;, &quot;woman&quot;, &quot;other&quot;', 'age': '', 'handedness': '&quot;right-handed&quot;, &quot;left-handed&quot;', 'number of years in education': '', 'shape': '&quot;square&quot;, &quot;diamond&quot;'}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '001', 'gender': '&quot;man&quot;, &quot;woman&quot;, &quot;other&quot;', 'age': '', 'handedness': '&quot;right-handed&quot;, &quot;left-handed&quot;', 'education (years)': '', 'shape': '&quot;square&quot;, &quot;diamond&quot;'}" valType="code" updates="None" name="Experiment info"/>
     <Param val="True" valType="bool" updates="None" name="Force stereo"/>
     <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
     <Param val="" valType="str" updates="None" name="HTML path"/>
@@ -82,8 +82,8 @@
         <Param val="functions" valType="code" updates="None" name="name"/>
       </CodeComponent>
       <CodeComponent name="trials">
-        <Param val="# Define the number of training trials&amp;#10;num_of_training = 24&amp;#10;&amp;#10;# Define the number of the experiment trials&amp;#10;num_of_trials = 4" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="num_of_training = 24;&amp;#10;num_of_trials = 4;&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="# Define the number of training trials&amp;#10;num_of_training = 4&amp;#10;&amp;#10;# Define the number of the experiment trials&amp;#10;num_of_trials = 4" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="num_of_training = 4;&amp;#10;num_of_trials = 4;&amp;#10;" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="trial_order = [];&amp;#10;training_order = [];&amp;#10;for (var trial, _pj_c = 0, _pj_a = util.range(num_of_trials), _pj_b = _pj_a.length; (_pj_c &lt; _pj_b); _pj_c += 1) {&amp;#10;    trial = _pj_a[_pj_c];&amp;#10;    if ((trial &gt;= (num_of_trials / 2))) {&amp;#10;        trial_order.push(1);&amp;#10;    } else {&amp;#10;        trial_order.push(0);&amp;#10;    }&amp;#10;}&amp;#10;for (var trial, _pj_c = 0, _pj_a = util.range(num_of_training), _pj_b = _pj_a.length; (_pj_c &lt; _pj_b); _pj_c += 1) {&amp;#10;    trial = _pj_a[_pj_c];&amp;#10;    if ((trial &gt;= (num_of_training / 2))) {&amp;#10;        training_order.push(1);&amp;#10;    } else {&amp;#10;        training_order.push(0);&amp;#10;    }&amp;#10;}&amp;#10;random.shuffle(trial_order);&amp;#10;random.shuffle(training_order);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
